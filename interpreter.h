@@ -1,5 +1,6 @@
-#ifndef LIB_H
-#define LIB_H
+#ifndef INTERPRETER_H
+#define INTERPRETER_H
+
 
 // TODO: create VM_H file use in lib.c
 // add dp array and ip array -> points to the instruction stream
