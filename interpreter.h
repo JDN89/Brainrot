@@ -18,11 +18,18 @@
 // WARNING:My interpreter file should havae it's own vm struct
 // just put all the logic in interpreter<>bytecodeVM<>compiler file and call
 // from c. no lib chananigans. the brainfuck language is small anyways
+
+#define ARRAY_SIZE 30000
+
 typedef struct {
-  int someState;
+  // pass the whole instruction string
+  char *ip;
+  // lifetime brais is same as lifetime VM 
+  int brain[ARRAY_SIZE];  
+  int *brainPointer;
 } VM;
 
-void initVM(VM *vm);
+void initVM(VM *vm, char *source);
 void freeVM(VM *vm);
 
 #endif
