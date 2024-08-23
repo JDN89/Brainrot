@@ -1,7 +1,6 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-
 // TODO: create VM_H file use in lib.c
 // add dp array and ip array -> points to the instruction stream
 // NOTE: when to use free()? I think when u use malloc
@@ -24,12 +23,13 @@
 typedef struct {
   // pass the whole instruction string
   char *ip;
-  // lifetime brais is same as lifetime VM 
-  int brain[ARRAY_SIZE];  
+  // lifetime brais is same as lifetime VM
+  int brain[ARRAY_SIZE];
   int *brainPointer;
 } VM;
 
 void initVM(VM *vm, char *source);
 void freeVM(VM *vm);
+void interpret(char *source);
 
 #endif

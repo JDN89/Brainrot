@@ -43,17 +43,13 @@ void freeVM(VM *vm) {
 }
 
 void interpret(char *source) {
-  //NOTE: in case I want to dynamically allocate the VM
-  /*VM *vm = (VM *)malloc(sizeof(VM));*/
-  /*if (vm == NULL) {*/
-  /*  perror("Failed to allocate memory for VM");*/
-  /*  exit(EXIT_FAILURE);*/
-  /*}*/
-  VM vm;
-  initVM(&vm, source);
-  /*printf("first char in srouce %s \n", vm->ip);*/
-  printf("first char in srouce %c \n", *vm.ip);
-  printf("first char in srouce %p \n", vm.ip);
-  freeVM(&vm);
-  /*free(vm);*/
+  VM *vm = (VM *) malloc(sizeOf(vm));
+  if (vm == NULL) {
+    perror("Failed to allocate memory for VM");
+    exit(EXIT_FAILURE);
+  }
+  initVM(vm, source);
+  printf("first char in srouce %s \n", vm->ip);
+  printf("first char in srouce %c \n", *vm->ip);
+  freeVM(vm);
 }
