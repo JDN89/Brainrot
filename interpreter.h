@@ -25,11 +25,11 @@ typedef struct {
   char *ip;
   // lifetime brais is same as lifetime VM
   int brain[ARRAY_SIZE];
-  int *brainPointer;
-} VM;
+  int *bp;
+} Interpreter;
 
-void initVM(VM *vm, char *source);
-void freeVM(VM *vm);
+void initVM(Interpreter *vm, char *source);
+void freeVM(Interpreter *vm);
 void interpret(char *source);
 
 #endif

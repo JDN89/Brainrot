@@ -2,58 +2,76 @@
 // instruction pointer points to the current cell to be executed
 
 #include "interpreter.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void initVM(VM *vm, char *source) {
-  printf("init VM! \n");
-  if (vm != NULL) {
-    // NOTE: Initialize brainpointer
-    if (source != NULL) {
-      // WARNING: check how we copied a string in CLOX. This doesn't ring a bell
-      // duplicate the source string
-      vm->ip = strdup(source);
-      if (vm->ip == NULL) {
-        perror("Failed to initiazlize the IP");
-        exit(EXIT_FAILURE);
-      }
-    } else {
-      vm->ip = NULL;
-    }
+//WARNING: Cut the crap! stop being a fucking Java dev, this is C code. Simplify this!
+Interpreter interpreter;
 
-    // initialize brain
-    memset(vm->brain, 0, ARRAY_SIZE * sizeof(int));
-    vm->brainPointer = &vm->brain[0];
-  }
+void initInterpreter(Interpreter *interpreter, char *source) {
+  // Initialize brain cells to 0
+  interpreter->ip = source;
+  memset(interpreter->brain, 0, ARRAY_SIZE * sizeof(int));
+  interpreter->bp = &interpreter->brain[0];
 }
 
-void freeVM(VM *vm) {
-  if (vm != NULL) {
-    printf("Free the VM! \n");
-    if (vm->ip != NULL) {
+void freeInterpreter(Interpreter *interpreter) {
+  if (interpreter != NULL) {
+    printf("Free the Interpreter! \n");
+    if (interpreter->ip != NULL) {
 
-      free(vm->ip);
-      vm->ip = NULL;
+      // WARNING: Do U need to free interpreter->ip?
+      free(interpreter->ip);
+      interpreter->ip = NULL;
     }
     // NOTE: brainpointer doens't need to be freed since it points to a static
     // array
-    vm->brainPointer = NULL;
+    interpreter->bp = NULL;
   }
 }
 
+bool isAtEnd() { return *interpreter.ip == '\0'; }
+
+void scanner() {}
+
 void interpret(char *source) {
-  //NOTE: in case I want to dynamically allocate the VM
-  /*VM *vm = (VM *)malloc(sizeof(VM));*/
-  /*if (vm == NULL) {*/
-  /*  perror("Failed to allocate memory for VM");*/
+  // NOTE: in case I want to dynamically allocate the Interpreter
+  /*Interpreter *interpreter = (Interpreter *)malloc(sizeof(Interpreter));*/
+  /*if (interpreter == NULL) {*/
+  /*  perror("Failed to allocate memory for Interpreter");*/
   /*  exit(EXIT_FAILURE);*/
   /*}*/
-  VM vm;
-  initVM(&vm, source);
-  /*printf("first char in srouce %s \n", vm->ip);*/
-  printf("first char in srouce %c \n", *vm.ip);
-  printf("first char in srouce %p \n", vm.ip);
-  freeVM(&vm);
-  /*free(vm);*/
+  initInterpreter(&interpreter, source);
+
+for(;;) {
+
+
+  if (isAtEnd()) {
+    printf("End of file reached \n");
+    break;
+  }
+
+  switch (*interpreter.ip) {
+  case '>':
+    printf("> -- %c \n", *interpreter.ip);
+    break;
+  case '<':
+    printf("< -- %c \n", *interpreter.ip);
+    break;
+  case '+':
+    printf("< -- %c \n", *interpreter.ip);
+    break;
+  case '-':
+    printf("< -- %c \n", *interpreter.ip);
+    break;
+  default:
+    printf("DEFAULT -- %c \n", *interpreter.ip);
+    break;
+  }
+  interpreter.ip++;
+  }
+  freeInterpreter(&interpreter);
+  /*free(interpreter);*/
 }
